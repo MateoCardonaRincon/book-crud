@@ -16,7 +16,7 @@ public class BookController {
 
     @GetMapping("get/books")
     public List<Book> getAllBooks(){
-        return service.getAllBooks();
+            return service.getAllBooks();
     }
 
     @PostMapping("save/book")
