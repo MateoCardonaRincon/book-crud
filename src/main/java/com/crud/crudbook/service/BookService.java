@@ -19,14 +19,19 @@ public class BookService implements BookServiceInterface{
     }
 
     @Override
+    public List<Book> getBooksByTitle(String title) {
+        return bookRepository.getBooksByTitle(title);
+    }
+
+    @Override
     public Book saveBook(Book book) {
         return bookRepository.save(book);
     }
 
     @Override
     public Book updateBook(Book book) {
-        Optional<Book> bookExist = bookRepository.findById(book.getId());
-        if(bookExist.isEmpty()){
+        Optional<Book> existingBook = bookRepository.findById(book.getId());
+        if(existingBook.isEmpty()){
             return null;
         }
         return bookRepository.save(book);
@@ -34,11 +39,11 @@ public class BookService implements BookServiceInterface{
 
     @Override
     public Optional<Book> deleteBook(Long id) {
-        Optional<Book> bookExist = bookRepository.findById(id);
-        if(bookExist.isPresent()){
+        Optional<Book> existingBook = bookRepository.findById(id);
+        if(existingBook.isPresent()){
             bookRepository.deleteById(id);
-            return bookExist;
+            return existingBook;
         }
-        return bookExist;
+        return existingBook;
     }
 }

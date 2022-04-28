@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class LoanService implements LoanServiceInterface {
@@ -20,7 +21,17 @@ public class LoanService implements LoanServiceInterface {
     }
 
     @Override
+    public List<Loan> getLoansByUserName(String userName) {
+        return loanRepository.getLoansByUserName(userName);
+    }
+
+    @Override
     public Loan saveLoan(Loan loan) {
+        List<Loan> userLoans = getLoansByUserName(loan.getUserName());
+        Stream<Loan> activeLoans = userLoans.stream().filter(l -> !l.getIsReturned());
+        if (activeLoans.count() > 0) {
+            return null;
+        }
         return loanRepository.save(loan);
     }
 
@@ -35,11 +46,11 @@ public class LoanService implements LoanServiceInterface {
 
     @Override
     public Optional<Loan> deleteLoan(Long id) {
-        Optional<Loan> loanExist = loanRepository.findById(id);
-        if(loanExist.isPresent()){
+        Optional<Loan> existingLoan = loanRepository.findById(id);
+        if (existingLoan.isPresent()) {
             loanRepository.deleteById(id);
-            return loanExist;
+            return existingLoan;
         }
-        return loanExist;
+        return existingLoan;
     }
 }

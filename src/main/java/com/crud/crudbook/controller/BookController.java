@@ -1,6 +1,7 @@
 package com.crud.crudbook.controller;
 
 import com.crud.crudbook.entity.Book;
+import com.crud.crudbook.repository.BookRepository;
 import com.crud.crudbook.service.BookServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,11 @@ public class BookController {
     @GetMapping("get/books")
     public List<Book> getAllBooks(){
             return service.getAllBooks();
+    }
+
+    @GetMapping("get/books/{title}")
+    public List<Book> getBooksByTitle(@PathVariable String title){
+        return service.getBooksByTitle(title);
     }
 
     @PostMapping("save/book")

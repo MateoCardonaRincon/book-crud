@@ -1,6 +1,7 @@
 package com.crud.crudbook.service;
 
 import com.crud.crudbook.entity.Loan;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public interface LoanServiceInterface {
 
     List<Loan> getAllLoans();
+
+    List<Loan> getLoansByUserName(String userName);
 
     Loan saveLoan(Loan loan);
 
