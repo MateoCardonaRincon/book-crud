@@ -1,8 +1,6 @@
 package com.crud.crudbook.service;
 
 import com.crud.crudbook.entity.Loan;
-import org.springframework.data.repository.query.Param;
-
 import java.util.List;
 import java.util.Optional;
 

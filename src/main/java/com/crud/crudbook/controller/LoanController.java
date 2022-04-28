@@ -1,13 +1,9 @@
 package com.crud.crudbook.controller;
 
-import com.crud.crudbook.entity.Book;
 import com.crud.crudbook.entity.Loan;
-import com.crud.crudbook.service.LoanService;
 import com.crud.crudbook.service.LoanServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.swing.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +20,7 @@ public class LoanController {
     }
 
     @GetMapping("get/loans/{userName}")
-    public List<Loan> getLoanByUserName(@PathVariable String userName) {
+    public List<Loan> getLoansByUserName(@PathVariable String userName) {
         return service.getLoansByUserName(userName);
     }
 

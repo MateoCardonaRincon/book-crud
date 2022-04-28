@@ -1,19 +1,23 @@
 package com.crud.crudbook.service;
 
+import com.crud.crudbook.entity.Book;
 import com.crud.crudbook.entity.Loan;
+import com.crud.crudbook.repository.BookRepository;
 import com.crud.crudbook.repository.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class LoanService implements LoanServiceInterface {
 
+
     @Autowired
     private LoanRepository loanRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     @Override
     public List<Loan> getAllLoans() {
@@ -27,21 +31,18 @@ public class LoanService implements LoanServiceInterface {
 
     @Override
     public Loan saveLoan(Loan loan) {
-        List<Loan> userLoans = getLoansByUserName(loan.getUserName());
-        Stream<Loan> activeLoans = userLoans.stream().filter(l -> !l.getIsReturned());
-        if (activeLoans.count() > 0) {
-            return null;
+        List<Loan> userActiveLoans = getLoansByUserName(loan.getUserName());
+        Optional<Book> existingBook = bookRepository.findById(loan.getFkBook());
+        if (existingBook.isPresent() && userActiveLoans.size() < 3) {
+            return existingBook.get().getAvailable() ? loanRepository.save(loan) : null;
         }
-        return loanRepository.save(loan);
+        return null;
     }
 
     @Override
     public Loan updateLoan(Loan loan) {
-        Optional<Loan> loanExist = loanRepository.findById(loan.getId());
-        if (loanExist.isEmpty()) {
-            return null;
-        }
-        return loanRepository.save(loan);
+        Optional<Loan> loanExists = loanRepository.findById(loan.getId());
+        return loanExists.isPresent() ? null : loanRepository.save(loan);
     }
 
     @Override
@@ -51,6 +52,6 @@ public class LoanService implements LoanServiceInterface {
             loanRepository.deleteById(id);
             return existingLoan;
         }
-        return existingLoan;
+        return Optional.empty();
     }
 }

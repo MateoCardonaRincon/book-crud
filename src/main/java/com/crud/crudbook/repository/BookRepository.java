@@ -1,7 +1,6 @@
 package com.crud.crudbook.repository;
 
 import com.crud.crudbook.entity.Book;
-import com.crud.crudbook.entity.Loan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

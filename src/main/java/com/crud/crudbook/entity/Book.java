@@ -3,7 +3,6 @@ package com.crud.crudbook.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity(name = "Book")
 @Table(name = "book")
@@ -20,4 +19,6 @@ public class Book {
     private String author;
 
     private Integer numberPages;
+
+    private Boolean available;
 }

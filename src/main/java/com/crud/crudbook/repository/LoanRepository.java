@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface LoanRepository extends JpaRepository<Loan, Long> {
 
-    @Query("SELECT l FROM Loan l WHERE l.userName = :userName")
+    @Query("SELECT l FROM Loan l WHERE l.userName = :userName AND l.active = 1")
     public List<Loan> getLoansByUserName(@Param("userName") String userName);
 
 }

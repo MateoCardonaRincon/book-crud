@@ -18,5 +18,16 @@ public class Loan {
 
     private Date loanDate;
 
-    private Boolean isReturned;
+    private Boolean active;
+
+    private Long fkBook;
+
+    @ManyToOne
+    @JoinColumn(
+            name = "fkBook",
+            insertable = false,
+            updatable = false,
+            nullable = false
+    )
+    private Book book;
 }

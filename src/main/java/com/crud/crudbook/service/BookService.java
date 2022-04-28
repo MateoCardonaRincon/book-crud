@@ -31,10 +31,10 @@ public class BookService implements BookServiceInterface{
     @Override
     public Book updateBook(Book book) {
         Optional<Book> existingBook = bookRepository.findById(book.getId());
-        if(existingBook.isEmpty()){
-            return null;
+        if(existingBook.isPresent()){
+            return bookRepository.save(book);
         }
-        return bookRepository.save(book);
+        return null;
     }
 
     @Override
@@ -44,6 +44,6 @@ public class BookService implements BookServiceInterface{
             bookRepository.deleteById(id);
             return existingBook;
         }
-        return existingBook;
+        return Optional.empty();
     }
 }

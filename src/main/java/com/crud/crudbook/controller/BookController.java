@@ -1,12 +1,12 @@
 package com.crud.crudbook.controller;
 
 import com.crud.crudbook.entity.Book;
-import com.crud.crudbook.repository.BookRepository;
 import com.crud.crudbook.service.BookServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/")
@@ -36,8 +36,8 @@ public class BookController {
     }
 
     @DeleteMapping("delete/book/{id}")
-    public void deleteBook(@PathVariable Long id){
-        service.deleteBook(id);
+    public Optional<Book> deleteBook(@PathVariable Long id){
+        return service.deleteBook(id);
     }
 
 }
